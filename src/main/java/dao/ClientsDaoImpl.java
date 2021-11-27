@@ -4,6 +4,7 @@ import models.Clients;
 import org.apache.log4j.Logger;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ClientsDaoImpl implements ClientsDao{
@@ -27,8 +28,21 @@ public class ClientsDaoImpl implements ClientsDao{
 
     @Override
     public List<Clients> getAllClients() {
+        List<Clients> clients = new ArrayList<>();
 
-        return null;
+        try(Connection conn = DriverManager.getConnection(url, username, password)){
+            String sql = "SELECT * FROM clients;";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+
+            while(rs.next()){
+                clients.add(new Clients(rs.getInt(1), rs.getString(2), rs.getDate(3)));
+            }
+        } catch (SQLException throwables) {
+            //throwables.printStackTrace();
+            logger.error(throwables);
+        }
+        return clients;
     }
 
     @Override
