@@ -104,5 +104,23 @@ class ClientsDaoImplTest {
 
     @Test
     void deleteClient() {
+        //assign
+        List<Clients> expectedResults = new ArrayList<>();
+        expectedResults.add(new Clients(1, "Michael", new Date(Calendar.getInstance().getTime().getTime())));
+        expectedResults.add(new Clients(2, "Jonathan", new Date(Calendar.getInstance().getTime().getTime())));
+        expectedResults.add(new Clients(3, "Lilly", new Date(Calendar.getInstance().getTime().getTime())));
+        clientsDao.createClient(expectedResults.get(0));
+        clientsDao.createClient(expectedResults.get(1));
+        clientsDao.createClient(expectedResults.get(2));
+
+        //act
+        clientsDao.deleteClient(2);
+        expectedResults.remove(1);
+        List<Clients> actualResults = clientsDao.getAllClients();
+
+        //assert
+        assertEquals(expectedResults.toString(), actualResults.toString());
+        assertNull(clientsDao.getOneClient(2));
+
     }
 }

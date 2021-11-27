@@ -94,6 +94,7 @@ public class ClientsDaoImpl implements ClientsDao{
             ps.setInt(2, clientId);
 
             ps.executeUpdate();
+
         } catch (SQLException throwables) {
             //throwables.printStackTrace();
             logger.error(throwables);
@@ -102,6 +103,16 @@ public class ClientsDaoImpl implements ClientsDao{
 
     @Override
     public void deleteClient(Integer clientId) {
+        try(Connection conn = DriverManager.getConnection(url, username, password)){
+            String sql = "DELETE FROM clients WHERE id = ?;";
+            PreparedStatement ps = conn.prepareStatement(sql);
 
+            ps.setInt(1, clientId);
+
+            ps.executeUpdate();
+
+        } catch (SQLException e) {
+            logger.error(e);
+        }
     }
 }
