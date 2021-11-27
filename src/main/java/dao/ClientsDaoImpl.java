@@ -1,13 +1,17 @@
 package dao;
 
 import models.Clients;
+import org.apache.log4j.Logger;
 
+import java.sql.*;
 import java.util.List;
 
 public class ClientsDaoImpl implements ClientsDao{
     String url;
     String username;
     String password;
+
+    Logger logger = Logger.getLogger(ClientsDaoImpl.class);
 
     public ClientsDaoImpl() {
         this.url = "jdbc:postgresql://" + System.getenv("AWS_RDS_ENDPOINT") + "/banking";
@@ -23,17 +27,47 @@ public class ClientsDaoImpl implements ClientsDao{
 
     @Override
     public List<Clients> getAllClients() {
+
         return null;
     }
 
     @Override
-    public Clients getOneClient(Integer clientId) {
-        return null;
+    public Clients getOneClient(Integer clientId){
+        Clients client = null;
+
+        //try create active connection to databse
+        try(Connection conn = DriverManager.getConnection(url, username, password)){
+            //use ? to replace variable we want to supply
+            String sql = "SELECT * FROM clients WHERE id = ?;";
+            PreparedStatement ps = conn.prepareStatement(sql);
+
+            ps.setInt(1, clientId);
+            ResultSet rs = ps.executeQuery();
+
+            while(rs.next()){
+                client = new Clients(rs.getInt(1), rs.getString(2), rs.getDate(3));
+            }
+
+        } catch(SQLException e){
+            //e.printStackTrace();
+            logger.error(e);
+        }
+        return client;
     }
 
     @Override
     public void createClient(Clients client) {
+        try(Connection conn = DriverManager.getConnection(url, username, password)){
+            String sql = "INSERT INTO clients VALUES(DEFAULT, ?, DEFAULT);";
+            PreparedStatement ps = conn.prepareStatement(sql);
 
+            ps.setString(1, client.getName());
+
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            //e.printStackTrace();
+            logger.error(e);
+        }
     }
 
     @Override

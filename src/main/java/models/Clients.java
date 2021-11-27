@@ -13,6 +13,12 @@ public class Clients {
         this.name = name;
     }
 
+    public Clients(Integer id , String name, Date clientDateCreation){
+        this.id = id;
+        this.name = name;
+        this.clientDateCreation = clientDateCreation;
+    }
+
     public Integer getId() {
         return id;
     }
