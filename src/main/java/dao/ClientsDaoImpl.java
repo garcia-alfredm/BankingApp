@@ -85,8 +85,19 @@ public class ClientsDaoImpl implements ClientsDao{
     }
 
     @Override
-    public void updateClient(Integer clientId) {
+    public void updateClient(Integer clientId, String name) {
+        try(Connection conn = DriverManager.getConnection(url, username, password)){
+            String sql = "UPDATE clients SET name = ? WHERE id = ?;";
+            PreparedStatement ps =conn.prepareStatement(sql);
 
+            ps.setString(1, name);
+            ps.setInt(2, clientId);
+
+            ps.executeUpdate();
+        } catch (SQLException throwables) {
+            //throwables.printStackTrace();
+            logger.error(throwables);
+        }
     }
 
     @Override

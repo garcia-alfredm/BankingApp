@@ -10,7 +10,10 @@ public class Clients {
     public Clients(){}
 
     public Clients(String name) {
+
         this.name = name;
+        this.id = 0;
+        this.clientDateCreation = null;
     }
 
     public Clients(Integer id , String name, Date clientDateCreation){

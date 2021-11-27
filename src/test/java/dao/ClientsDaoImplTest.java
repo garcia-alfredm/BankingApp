@@ -89,6 +89,17 @@ class ClientsDaoImplTest {
 
     @Test
     void updateClient() {
+        //arrange
+        Clients clientToPass = new Clients(1, "Michael", new Date(Calendar.getInstance().getTime().getTime()));
+        Clients expectedResult = new Clients(1, "Daniel", new Date(Calendar.getInstance().getTime().getTime()));
+        clientsDao.createClient(clientToPass);
+
+        //act
+        clientsDao.updateClient(clientToPass.getId(), "Daniel");
+        Clients actualResult = clientsDao.getOneClient(clientToPass.getId());
+
+        //assert
+        assertEquals(expectedResult.toString(), actualResult.toString());
     }
 
     @Test
