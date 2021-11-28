@@ -11,6 +11,8 @@ public interface AccountsDao {
 
     void createAccount(Integer clientIdFk, Double amount);
 
+    void createAccount(Accounts account);
+
     void updateAccount(Integer accountId, Double amount, Integer clientIdFk);
 
     void deleteAccount(Integer accountId, Integer clientIdFk);

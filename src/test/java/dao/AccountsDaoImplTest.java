@@ -90,7 +90,7 @@ class AccountsDaoImplTest {
         Double value = 0.00;
 
         //act
-        accountsDao.createAccount(clientsDao.getOneClient(1).getId(), value);
+        accountsDao.createAccount(expectedResults);
         Accounts actualResults = accountsDao.getOneAccount(1, clientsDao.getOneClient(1).getId());
 
         //assert
@@ -115,6 +115,26 @@ class AccountsDaoImplTest {
 
     @Test
     void deleteAccount() {
+        //assign
+        Date date = new Date(Calendar.getInstance().getTime().getTime());
+        Clients client = new Clients(1, "Michael", date);
+        clientsDao.createClient(client);
 
+        List<Accounts> expectedResults = new ArrayList<>();
+        expectedResults.add(new Accounts(1, 1, 0.00, date));
+        expectedResults.add(new Accounts(2, 1, 20.00, date));
+        expectedResults.add(new Accounts(3, 1, 100.00, date));
+        accountsDao.createAccount(expectedResults.get(0));
+        accountsDao.createAccount(expectedResults.get(1));
+        accountsDao.createAccount(expectedResults.get(2));
+
+        //act
+        //remove 2nd account element
+        expectedResults.remove(1);
+        accountsDao.deleteAccount(2, 1);
+        List<Accounts> actualResults = accountsDao.getAllAccounts();
+
+        //assert
+        assertEquals(expectedResults.toString(), actualResults.toString());
     }
 }

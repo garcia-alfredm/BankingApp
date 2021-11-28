@@ -77,6 +77,20 @@ public class AccountsDaoImpl implements AccountsDao {
             logger.error(throwables);
         }
     }
+    @Override
+    public void createAccount(Accounts account) {
+        try(Connection conn = DriverManager.getConnection(url, username, password)){
+            String sql = "INSERT INTO accounts VALUES(DEFAULT, ?, ?, DEFAULT);";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, account.getClientIdFk());
+            ps.setDouble(2, account.getBalance());
+
+            ps.executeUpdate();
+
+        } catch (SQLException throwables) {
+            logger.error(throwables);
+        }
+    }
 
     @Override
     public void updateAccount(Integer accountId, Double amount, Integer clientIdFk) {
@@ -95,6 +109,16 @@ public class AccountsDaoImpl implements AccountsDao {
 
     @Override
     public void deleteAccount(Integer accountId, Integer clientIdFk) {
+        try(Connection conn = DriverManager.getConnection(url, username, password)){
+            String sql = "DELETE FROM accounts WHERE id = ? AND client_id_fk = ?;";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, accountId);
+            ps.setInt(2, clientIdFk);
 
+            ps.executeUpdate();
+
+        } catch (SQLException throwables) {
+            logger.error(throwables);
+        }
     }
 }
