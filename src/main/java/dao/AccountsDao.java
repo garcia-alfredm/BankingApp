@@ -9,7 +9,7 @@ public interface AccountsDao {
 
     Accounts getOneAccount(Integer accountId, Integer clientIdFk);
 
-    void createAccount(Accounts account, Integer clientIdFk);
+    void createAccount(Integer clientIdFk, Double amount);
 
     void updateAccount(Integer accountId, Double amount, Integer clientIdFk);
 

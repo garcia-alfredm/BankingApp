@@ -11,7 +11,7 @@ public class H2Util {
     public static String username = "sa";
     public static String password = "sa";
 
-    public static void createTable(){
+    public static void createClientsTable(){
         try{
             Connection conn = DriverManager.getConnection(url, username, password);
             String sql = "CREATE TABLE clients(\n" +
@@ -29,13 +29,46 @@ public class H2Util {
         }
     }
 
-    public static void dropTable(){
+    public static void dropClientsTable(){
         try{
             Connection conn = DriverManager.getConnection(url, username, password);
-            String sql = "DROP TABLE clients";
+            String sql = "DROP TABLE clients;";
             PreparedStatement ps = conn.prepareStatement(sql);
 
             ps.executeUpdate();
+            conn.close();
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
+    public static void createAccountsTable(){
+        try{
+            Connection conn = DriverManager.getConnection(url, username, password);
+            String sql = "CREATE TABLE accounts(\n" +
+                    "\tid serial PRIMARY KEY,\n" +
+                    "\tclient_id_fk int REFERENCES clients(id),\n" +
+                    "\tbalance double PRECISION DEFAULT 0.00,\n" +
+                    "\taccount_date_creation timestamp DEFAULT now()\n" +
+                    ")";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.executeUpdate();
+
+            conn.close();
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
+    public static void dropAccountsTable(){
+        try{
+            Connection conn = DriverManager.getConnection(url, username, password);
+            String sql = "DROP TABLE accounts;";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.executeUpdate();
+
             conn.close();
 
         } catch (SQLException throwables) {

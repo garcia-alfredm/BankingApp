@@ -25,12 +25,12 @@ class ClientsDaoImplTest {
 
     @BeforeEach
     void setUp() throws SQLException{
-        H2Util.createTable();
+        H2Util.createClientsTable();
     }
 
     @AfterEach
     void tearDown(){
-        H2Util.dropTable();
+        H2Util.dropClientsTable();
     }
 
     @Test
