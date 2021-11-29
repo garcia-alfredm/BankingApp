@@ -71,7 +71,6 @@ class AccountsServiceTest {
         //act
         accountsService.createAccount(expectedResult);
 
-
         //assert
         Mockito.verify(accountsDao, Mockito.times(1)).createAccount(expectedResult);
 
@@ -79,6 +78,18 @@ class AccountsServiceTest {
 
     @Test
     void updateAccount() {
+        //arrange
+        Date date = new Date(Calendar.getInstance().getTime().getTime());
+        Clients client = new Clients(1, "John", date);
+        Accounts expectedResult = new Accounts(1, 1, 0.0, date);
+        Double amount = 20.00;
+        Mockito.when(clientsService.getOneClient(1)).thenReturn(client);
+
+        //act
+        accountsService.updateAccount(1, amount, 1);
+
+        //assert
+        Mockito.verify(accountsDao, Mockito.times(1)).updateAccount(1, amount, 1);
     }
 
     @Test
