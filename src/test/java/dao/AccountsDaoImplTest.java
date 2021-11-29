@@ -42,12 +42,13 @@ class AccountsDaoImplTest {
     @Test
     void getAllAccounts() {
         //assign
+        Date date = new Date(Calendar.getInstance().getTime().getTime());
         List<Accounts> expectedResults = new ArrayList<>();
         Clients client = new Clients(1, "Michael", new Date(Calendar.getInstance().getTime().getTime()));
         clientsDao.createClient(client);
-        expectedResults.add(new Accounts(1, 1, 0.00, new Date(Calendar.getInstance().getTime().getTime())));
-        expectedResults.add(new Accounts(2, 1, 20.00, new Date(Calendar.getInstance().getTime().getTime())));
-        expectedResults.add(new Accounts(3, 1, 100.00, new Date(Calendar.getInstance().getTime().getTime())));
+        expectedResults.add(new Accounts(1, 1, 0.00, date));
+        expectedResults.add(new Accounts(2, 1, 20.00, date));
+        expectedResults.add(new Accounts(3, 1, 100.00, date));
         accountsDao.createAccount(expectedResults.get(0).getId(), 0.00);
         accountsDao.createAccount(expectedResults.get(0).getId(), 20.00);
         accountsDao.createAccount(expectedResults.get(0).getId(), 100.00);
