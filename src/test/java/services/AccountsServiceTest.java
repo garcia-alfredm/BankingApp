@@ -3,6 +3,7 @@ package services;
 import dao.AccountsDao;
 import models.Accounts;
 import models.Clients;
+import org.checkerframework.checker.units.qual.A;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
@@ -63,6 +64,17 @@ class AccountsServiceTest {
 
     @Test
     void createAccount() {
+        //arrange
+        Date date = new Date(Calendar.getInstance().getTime().getTime());
+        Accounts expectedResult = new Accounts(1, 1, 0.0, date);
+
+        //act
+        accountsService.createAccount(expectedResult);
+
+
+        //assert
+        Mockito.verify(accountsDao, Mockito.times(1)).createAccount(expectedResult);
+
     }
 
     @Test
