@@ -172,6 +172,19 @@ class AccountsServiceTest {
 
     @Test
     void deposit() {
+        //assign
+        Date date = new Date(Calendar.getInstance().getTime().getTime());
+        Clients client = new Clients(1, "John", date);
+        Accounts account = new Accounts(1, 1, 20.00, date);
+        Mockito.when(clientsService.getOneClient(1)).thenReturn(client);
+        Mockito.when(accountsDao.getOneAccount(1, 1)).thenReturn(account);
+
+        //act
+        accountsService.deposit(1,1,10.00);
+        //assert
+        Mockito.verify(accountsDao,
+                Mockito.times(1)).
+                updateAccount(1,30.0,1);
     }
 
     @Test

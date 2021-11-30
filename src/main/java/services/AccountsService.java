@@ -98,7 +98,7 @@ public class AccountsService {
             return false;
         }
         Double amount = target.getBalance() + value;
-        updateAccount(id, value, clientIdFk);
+        updateAccount(id, amount, clientIdFk);
 
         return true;
     }
