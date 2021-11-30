@@ -189,5 +189,25 @@ class AccountsServiceTest {
 
     @Test
     void transfer() {
+        Date date = new Date(Calendar.getInstance().getTime().getTime());
+        Clients client = new Clients(1, "John", date);
+        List<Accounts> accounts = new ArrayList<>();
+        accounts.add(new Accounts(1, 1, 20.00, date));
+        accounts.add(new Accounts(2, 1, 5.00, date));
+        //Accounts account = new Accounts(1, 1, 20.00, date);
+        Mockito.when(clientsService.getOneClient(1)).thenReturn(client);
+        Mockito.when(accountsDao.getOneAccount(1, 1)).thenReturn(accounts.get(0));
+        Mockito.when(accountsDao.getOneAccount(2, 1)).thenReturn(accounts.get(1));
+
+        //act
+        accountsService.transfer(1,2, 1,5.00);
+        //assert
+        Mockito.verify(accountsDao,
+                Mockito.times(1)).
+                updateAccount(1,15.0,1);
+        Mockito.verify(accountsDao,
+                Mockito.times(1)).
+                updateAccount(2,10.0,1);
+
     }
 }

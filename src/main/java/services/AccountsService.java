@@ -106,7 +106,7 @@ public class AccountsService {
     public Boolean transfer(Integer fromId, Integer toId, Integer clientIdFk, Double value){
         //verify client exists, if not send 404
         Clients clients = clientsService.getOneClient(clientIdFk);
-        //verify account exists
+        //verify account exists, if not send 404
         List<Accounts> accounts = new ArrayList<>();
         accounts.add(getOneAccount(fromId, clientIdFk));
         accounts.add(getOneAccount(toId, clientIdFk));
@@ -117,7 +117,7 @@ public class AccountsService {
         //withdraw amount from acc
         updateAccount(fromId, accounts.get(0).getBalance() - value, clientIdFk);
         //deposit amount from acc
-        updateAccount(fromId, accounts.get(1).getBalance() + value, clientIdFk);
+        updateAccount(toId, accounts.get(1).getBalance() + value, clientIdFk);
 
         return true;
     }
