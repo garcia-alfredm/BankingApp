@@ -114,10 +114,40 @@ class AccountsServiceTest {
 
     @Test
     void getClientAccounts() {
+        //act
+        Date date = new Date(Calendar.getInstance().getTime().getTime());
+        List<Accounts> accounts = new ArrayList<>();
+        accounts.add(new Accounts(1, 1, 0.0, date));
+        accounts.add(new Accounts(2, 1, 10.0, date));
+        accounts.add(new Accounts(3, 2, 20.0, date));
+        Mockito.when(accountsService.getAllAccounts()).thenReturn(accounts);
+        List<Accounts> expectedResults = new ArrayList<>();
+        expectedResults.add(accounts.get(0));
+        expectedResults.add((accounts.get(1)));
+        //assign
+        List<Accounts> actualResults = accountsService.getClientAccounts(1);
+
+        //assert
+        assertEquals(expectedResults, actualResults);
     }
 
     @Test
     void getClientAccountsLessThanGreaterThan() {
+        //act
+        Date date = new Date(Calendar.getInstance().getTime().getTime());
+        List<Accounts> accounts = new ArrayList<>();
+        accounts.add(new Accounts(1, 1, 0.0, date));
+        accounts.add(new Accounts(2, 1, 10.0, date));
+        accounts.add(new Accounts(3, 2, 20.0, date));
+        Mockito.when(accountsService.getAllAccounts()).thenReturn(accounts);
+        List<Accounts> expectedResults = new ArrayList<>();
+        expectedResults.add(accounts.get(0));
+        expectedResults.add((accounts.get(1)));
+        //assign
+        List<Accounts> actualResults = accountsService.getClientAccounts(1);
+
+        //assert
+        assertEquals(expectedResults, actualResults);
     }
 
     @Test
