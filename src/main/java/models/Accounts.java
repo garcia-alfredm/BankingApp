@@ -12,6 +12,11 @@ public class Accounts {
         this.balance = 0.00;
     }
 
+    public Accounts(Integer clientIdFk, Double balance){
+        this.clientIdFk = clientIdFk;
+        this.balance = balance;
+    }
+
     public Accounts(Integer id, Integer clientIdFk, Double balance, Date accountDateCreation) {
         this.id = id;
         this.clientIdFk = clientIdFk;

@@ -70,7 +70,7 @@ public class AccountsService {
             int checkClientFk = allAccounts.get(i).getClientIdFk();
             Double checkBalance = allAccounts.get(i).getBalance();
 
-            if(checkClientFk == clientIdFk && checkBalance > lessThan && checkBalance < greaterThan){
+            if(checkClientFk == clientIdFk && checkBalance < lessThan && checkBalance > greaterThan){
                 clientAccounts.add(allAccounts.get(i));
             }
         }
